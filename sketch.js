@@ -1,49 +1,57 @@
-let walkers = [4];
+let w1;
+let w2;
+let w3;
+let w4;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  for (let i = 0; i < 4; i++) {
-    // Crear un objeto Walker con una posición aleatoria dentro del canvas
-    walkers[i] = new walker(200, 200);
-  }
+  w1 = new Walker(random(windowWidth), random(windowHeight));
+  w2 = new Walker(random(windowWidth), random(windowHeight));
+  w3 = new Walker(random(windowWidth), random(windowHeight));
+  w4 = new Walker(random(windowWidth), random(windowHeight));
 }
 
-// Recorrer el arreglo y actualizar y mostrar cada objeto Walker en la función draw
 function draw() {
-  for (let w of walkers) {
-    w.update();
-    w.display();
-  }
+  w1.update();
+  w1.display();
+  w2.update();
+  w2.display();
+  w3.update();
+  w3.display();
+  w4.update();
+  w4.display();
 }
 
-class walker {
-  constructor(_posX, _posY) {
-    this.posX = _posX;
-    this.posY = _posY;
-    // Asignar la velocidad a un rango entre -10 y 10
-    this.vel = map(random(1, 10), 1, 10, -10, 10);
-    this.color = color(random(0, 200), random(0, 200), random(0, 200));
-    this.esCirculo = random();
+class Walker {
+  constructor(_x, _y) {
+    this.posx = _x;
+    this.posy = _y;
+    this.vel = random(2, 20);
+    this.color = color(random(50), random(255), random(255));
+
+    this.esCirculo = random() > 0.5 ? true : false;
+
+    // this.esCirculo;
+    // this.r = random();
+    // if (this.r > 0.5) {
+    // 	this.esCirculo = true;
+    // } else {
+    // 	this.esCirculo = false;
+    // }
   }
 
   update() {
-    // Variar la posición en X y Y según un valor aleatorio
-    this.posX += random(-this.vel, this.vel);
-    this.posY += random(-this.vel, this.vel);
-    // Restringir la posición en X y Y dentro del canvas
-    this.posX = constrain(this.posX, 0, width);
-    this.posY = constrain(this.posY, 0, height);
+    this.posx = constrain(this.posx + random(-this.vel, this.vel), 0, width);
+    this.posy = constrain(this.posy + random(-this.vel, this.vel), 0, height);
   }
 
   display() {
     fill(this.color);
-    //noStroke();
-    // stroke(10);
-    //strokeWeight(1, 10);
+    noStroke();
     if (this.esCirculo) {
-      circle(this.posX, this.posY, 10);
+      circle(this.posx, this.posy, random(20, 2));
     } else {
-      rect(this.posX, this.posY, 10, 10);
+      rect(this.posx, this.posy, random(20, 2), random(20, 2));
     }
   }
 }
